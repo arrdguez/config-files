@@ -1,5 +1,8 @@
 # i3 keybind
 
+Log out:     Mod+Shift+E
+Lock:        writ in terminal i3lock
+
 Open terminal:    Mod+enter
 Close:            Mod+Shift+Q
 Open application: Mod+D
