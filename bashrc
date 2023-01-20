@@ -12,6 +12,8 @@ fi
 export PATH=${PATH}:${HOME}/bin
 export PATH=${PATH}:${HOME}/Dropbox/scripts
 export PATH=${PATH}:${HOME}/.local/bin
+export PATH=${PATH}:/opt/sublime_text
+
 export JMOL_HOME=${HOME}/bin
 
 # If not running interactively, don't do anything

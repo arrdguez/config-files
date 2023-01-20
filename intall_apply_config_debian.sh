@@ -19,17 +19,33 @@ function preparation() {
     alias mkdir='mkdir --parents --verbose'
     alias cp='cp --verbose'
     alias rm='rm --verbose'
+
+    git clone https://github.com/arrdguez/config-files
+    cd config-files
+    rm $HOME/.bashrc
+    cp bashrc $HOME/
+    mv $HOME/bashrc $HOME/.bashrc
+    source $HOME/.bashrc
+    cp ./sink-switch.sh /usr/bin/
+    cd ..
+}
+
+function install_buttercup(){
+    echo '... installing ButterCup'
+    #https://github.com/buttercup/buttercup-desktop/releases/download/v2.18.0/Buttercup-linux-x86_64.AppImage
 }
 
 function install_required_packages() {
 
     # Refresh apt
     sudo apt-get update -qq
-    sudo apt-get install polybar unzip compton nitrogen conky rofi arandr feh watch 
+    sudo apt-get install polybar unzip compton nitrogen conky rofi arandr feh watch git lxappearance
     #libxcb-composite0-dev libxcb1-dev libxcb-keysyms1-dev libpango1.0-dev libxcb-util0-dev libxcb-icccm4-dev libyajl-dev libstartup-notification0-dev libxcb-randr0-dev libev-dev libxcb-cursor-dev libxcb-xinerama0-dev libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev autoconf xutils-dev dh-autoreconf x11-xserver-utils binutils gcc make pkg-config fakeroot cmake python-xcbgen xcb-proto libxcb-ewmh-dev wireless-tools libiw-dev libasound2-dev libpulse-dev libcurl4-openssl-dev libmpdclient-dev pavucontrol rxvt
 }
 
-
+function get_config_repo() {
+    pwd
+}
 
 
 function create_config_files() {
@@ -50,6 +66,11 @@ function create_config_files() {
     else
         mkdir "$HOME"/.config/nitrogen
         touch "$HOME"/.config/nitrogen/bg-saved.cfg
+    fi
+    if [-e "$HOME"/.fonts/ ]; then
+        echo "... .fonts found."
+    else
+        mkdir "$HOME"/.fonts
     fi
     if [ -e "$HOME"/.config/polybar/config ]; then
         echo "... polybar/config found."
@@ -74,5 +95,6 @@ function create_config_files() {
 
 
 preparation
+get_config_repo
 install_required_packages
 create_config_files
