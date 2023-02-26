@@ -213,4 +213,5 @@ exec --no-startup-id /usr/lib/gnome-settings-daemon/gnome-settings-daemon
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id gnome-keyring-daemon --start --components=secrets
 
-exec --no-startup-id conky -d
+exec --no-startup-id conky -d -c $HOME/.config/conky/conky.conf
+exec --no-startup-id conky -d -c $HOME/.config/conky/conky_d.conf 
