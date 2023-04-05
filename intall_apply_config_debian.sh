@@ -20,6 +20,9 @@ function preparation() {
     alias cp='cp --verbose'
     alias rm='rm --verbose'
 
+    sudo apt-get update
+    sudo apt-get dist-upgrade -y
+    sudo apt-get install git
     git clone https://github.com/arrdguez/config-files
     cd config-files
     rm $HOME/.bashrc
@@ -27,19 +30,19 @@ function preparation() {
     mv $HOME/bashrc $HOME/.bashrc
     source $HOME/.bashrc
     cp ./sink-switch.sh /usr/bin/
-    cd ..
+    ls -la
+
 }
 
 function install_buttercup(){
     echo '... installing ButterCup'
-    #https://github.com/buttercup/buttercup-desktop/releases/download/v2.18.0/Buttercup-linux-x86_64.AppImage
+    wget https://github.com/buttercup/buttercup-desktop/releases/download/v2.18.0/Buttercup-linux-x86_64.AppImage
 }
 
 function install_required_packages() {
-
+    echo "Installing required packages ..."
     # Refresh apt
-    sudo apt-get update -qq
-    sudo apt-get install polybar unzip compton nitrogen conky rofi arandr feh watch git lxappearance
+    sudo apt-get install polybar unzip compton nitrogen conky rofi arandr feh watch git lxappearance addr2line speedtest-cli i3 i3-wm catfish curl htop terminator xrandr
     #libxcb-composite0-dev libxcb1-dev libxcb-keysyms1-dev libpango1.0-dev libxcb-util0-dev libxcb-icccm4-dev libyajl-dev libstartup-notification0-dev libxcb-randr0-dev libev-dev libxcb-cursor-dev libxcb-xinerama0-dev libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev autoconf xutils-dev dh-autoreconf x11-xserver-utils binutils gcc make pkg-config fakeroot cmake python-xcbgen xcb-proto libxcb-ewmh-dev wireless-tools libiw-dev libasound2-dev libpulse-dev libcurl4-openssl-dev libmpdclient-dev pavucontrol rxvt
 }
 
@@ -49,6 +52,7 @@ function get_config_repo() {
 
 
 function create_config_files() {
+    echo "Creating the config file..."
     # Folder doesn't exist on a clean instalation of Debian
     if [ -e "$HOME"/.config ]; then
         echo "... .config found."
@@ -75,26 +79,40 @@ function create_config_files() {
     if [ -e "$HOME"/.config/polybar/config ]; then
         echo "... polybar/config found."
     else
-        mkdir "$HOME"/.config/polybar
-        touch "$HOME"/.config/polybar/config
+        cp -r ./polybar "$HOME"/.config/
     fi
     if [ -e "$HOME"/.config/i3/config ]; then
         echo "... i3/config found."
     else
         mkdir "$HOME"/.config/i3
-        touch "$HOME"/.config/i3/config
+        cp -r ./i3 "$HOME/.config/"
     fi
     # Compton config file doesn't come by default
-    if [ -e "$HOME"/.config/compton.conf ]; then
+    if [ -e "$HOME"/.config/compton/compton.conf ]; then
         echo "... compton.conf found"
     else
-        cp "/usr/share/doc/compton/examples/compton.sample.conf" "$HOME/.config/compton.conf"
+        mkdir "$HOME"/.config/compton
+        cp -r ./compton "$HOME/.config/"
+    fi
+    # Conky config file doesn't come by default
+    if [ -e "$HOME"/.config/conky/conky.conf ]; then
+        echo "... conky.conf found"
+    else
+        mkdir "$HOME"/.config/conky
+        cp -r ./conky "$HOME/.config/"
     fi
 }
 
-
+function brave() {
+    echo "Installing brave ..."
+    sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+    echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+    sudo apt update
+    sudo apt install brave-browser
+}
 
 preparation
-get_config_repo
 install_required_packages
+get_config_repo
 create_config_files
+brave
