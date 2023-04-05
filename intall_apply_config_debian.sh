@@ -42,7 +42,7 @@ function install_buttercup(){
 function install_required_packages() {
     echo "Installing required packages ..."
     # Refresh apt
-    sudo apt-get install polybar unzip compton nitrogen conky rofi arandr feh watch git lxappearance addr2line speedtest-cli i3 i3-wm catfish curl htop terminator xrandr
+    sudo apt-get install polybar unzip compton nitrogen conky rofi arandr feh watch git lxappearance speedtest-cli i3 i3-wm catfish curl htop terminator x11-xserver-utils binutils
     #libxcb-composite0-dev libxcb1-dev libxcb-keysyms1-dev libpango1.0-dev libxcb-util0-dev libxcb-icccm4-dev libyajl-dev libstartup-notification0-dev libxcb-randr0-dev libev-dev libxcb-cursor-dev libxcb-xinerama0-dev libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev autoconf xutils-dev dh-autoreconf x11-xserver-utils binutils gcc make pkg-config fakeroot cmake python-xcbgen xcb-proto libxcb-ewmh-dev wireless-tools libiw-dev libasound2-dev libpulse-dev libcurl4-openssl-dev libmpdclient-dev pavucontrol rxvt
 }
 
