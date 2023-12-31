@@ -1,0 +1,53 @@
+conky.config = {
+    background = true,
+    cpu_avg_samples = 3,
+    double_buffer = true,
+    imlib_cache_size = 0,
+    no_buffers = true,
+    nvidia = true,
+    override_utf8_locale = true,
+    own_window = true,
+    own_window_argb_visual = true,
+    own_window_class = 'conky-semi',
+    own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+    own_window_type = 'override',
+    own_window_transparent = false,
+    own_window_argb_value = 130, -- semi-transparent
+    temperature_unit = celsius,
+    total_run_times = 0,
+    uppercase = false,
+    update_interval = 1.0,
+    use_xft = true,
+    xftalpha = 0.8,
+    -- xinerama_head, to apply to other
+    xinerama_head = 5,
+
+    -- placement
+    alignment = 'top_right',
+    gap_x = 25,
+    gap_y = 45,
+
+    -- default drawing
+    draw_borders = false,
+    draw_graph_borders = true,
+    draw_outline = false,
+    draw_shades = false,
+    default_bar_width = 150, default_bar_height = 5,
+    default_gauge_width = 20, default_gauge_height = 20,
+    default_graph_width = 150, default_graph_height = 12,
+
+    -- colors
+    font = 'Liberation Mono:size=10',
+    default_color = 'FF993D',
+    color1 = 'AABBFF',
+    color2 = 'FF993D',
+    color3 = 'AAAAAA',
+
+    -- layouting
+    template0 = [[${font Liberation Sans:bold:size=15}${color2}\1 ${color3}${hr 2}${font}]],
+    template1 = [[${color1}${font size=20}\1]],
+    template2 = [[${goto 140}${color}${font size=20}]],
+    template3 = [[${goto 210}${color}${alignr}${font size=50}]],
+    template4 = [[${color}${alignc}${font bold:size=50}]],
+    template5 = [[${color}${font size=30}${alignc}]],
+};

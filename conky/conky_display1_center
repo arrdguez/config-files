@@ -1,0 +1,84 @@
+conky.config = {
+    -------------------------------------
+    --  Generic Settings
+    -------------------------------------
+    background = true,
+    update_interval = 1.0,
+    double_buffer = true,
+    no_buffers = true,
+    imlib_cache_size = 4,
+
+    draw_shades = false,
+    draw_outline = false,
+    draw_borders = false,
+    draw_graph_borders = true,
+    default_graph_height=26,
+    default_graph_width=80,
+    show_graph_scale=false,
+    show_graph_range=false,
+    total_run_times = 0,
+    cpu_avg_samples = 2,
+    xinerama_head = 0,
+
+
+    -------------------------------------
+    --  Window Specifications
+    -------------------------------------
+    gap_x = 50,
+    gap_y = 80,
+    minimum_height=158,
+    minimum_width=268,
+    own_window = true,
+    own_window_transparent = false,
+    own_window_argb_visual = true,
+    own_window_argb_value = 255,
+    own_window_type = 'override',
+    own_window_class = 'Conky',
+    -- own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+    own_window_colour = '#58C1C1',
+    alignment = 'middle_middle',
+    border_outer_margin = 20,
+
+
+    -------------------------------------
+    --  Text Settings
+    -------------------------------------
+    use_xft = true,
+    xftalpha = 0.8,
+    uppercase = false,
+    override_utf8_locale = true,
+    font = 'Droid Sans Mono:size=12',
+
+
+    -------------------------------------
+    --  Color Scheme
+    -------------------------------------
+    default_color = 'EEEEEE',
+    default_color="e5ded0",
+    color1 = 'AABBFF',
+    color2 = 'FF993D',
+    color3 = 'AAAAAA',
+
+    -------------------------------------
+    -- layouting
+    -------------------------------------
+    template0 = [[${font Liberation Sans:bold:size=15}${color2}\1 ${color3}${hr 2}${font}]],
+    template1 = [[${color1}${font size=20}\1]],
+    template2 = [[${goto 140}${color}${font size=20}]],
+    template3 = [[${goto 210}${font Open Sans Light:size=12}${color}${alignr}]],
+    template4 = [[${color}${alignc}${font Open Sans bold:size=60}]],
+    template5 = [[${color}${font size=30}${alignc}]],
+};
+
+
+
+
+conky.text = [[
+  ${image ~/.config/conky/icons/debian_icon_1.png -p 0,0 -s 150x150 -n}
+  ${goto 175}${font Droid Sans Mono:size=22}${font}   OS: ${execi 10800 cat /etc/issue.net} ${machine}${font}
+  ${goto 175}${font Droid Sans Mono:size=22}${font}   Kernel: ${kernel}${font}
+  ${goto 175}${font StyleBats:size=22}${font}   Hostname: ${nodename}${font}
+  ${goto 175}${font StyleBats:size=22}${font}   Uptime: ${uptime}${font}
+  ${goto 175}${font StyleBats:size=22}${font}   Processes: ${processes} ($running_processes running)${font}
+
+]];

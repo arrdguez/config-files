@@ -30,19 +30,27 @@ function preparation() {
     mv $HOME/bashrc $HOME/.bashrc
     source $HOME/.bashrc
     cp ./sink-switch.sh /usr/bin/
+    echo "Copy the <sink-switch> script to switch from headphones to/from speakers."
     ls -la
 
 }
 
 function install_buttercup(){
-    echo '... installing ButterCup'
-    wget https://github.com/buttercup/buttercup-desktop/releases/download/v2.18.0/Buttercup-linux-x86_64.AppImage
+    echo 'Installing the  v2.24.4 version of ButterCup'
+    echo 'Please check https://github.com/buttercup/buttercup-desktop/releases for the latest version.'
+    wget https://github.com/buttercup/buttercup-desktop/releases/download/v2.24.4/Buttercup-linux-x86_64.AppImage
 }
 
 function install_required_packages() {
-    echo "Installing required packages ..."
+    echo "Installing required packages to setup i3-wm environment ..."
+    echo "i3-wm environment"
+    echo "nitrogen Wallpaper admin"
+    echo "compton to visual effects composites"
+    echo "polybar for task bar"
+    echo "rofi application menu"
+    echo "conky for wgets"
     # Refresh apt
-    sudo apt-get install polybar unzip compton nitrogen conky rofi arandr feh watch git lxappearance speedtest-cli i3 i3-wm catfish curl htop terminator x11-xserver-utils binutils
+    sudo apt-get install polybar unzip compton nitrogen conky rofi arandr feh watch lxappearance speedtest-cli i3 i3-wm catfish curl htop terminator x11-xserver-utils binutils command-not-found ncal ncdu trash-cli -y
     #libxcb-composite0-dev libxcb1-dev libxcb-keysyms1-dev libpango1.0-dev libxcb-util0-dev libxcb-icccm4-dev libyajl-dev libstartup-notification0-dev libxcb-randr0-dev libev-dev libxcb-cursor-dev libxcb-xinerama0-dev libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev autoconf xutils-dev dh-autoreconf x11-xserver-utils binutils gcc make pkg-config fakeroot cmake python-xcbgen xcb-proto libxcb-ewmh-dev wireless-tools libiw-dev libasound2-dev libpulse-dev libcurl4-openssl-dev libmpdclient-dev pavucontrol rxvt
 }
 
@@ -54,52 +62,52 @@ function get_config_repo() {
 function create_config_files() {
     echo "Creating the config file..."
     # Folder doesn't exist on a clean instalation of Debian
-    if [ -e "$HOME"/.config ]; then
-        echo "... .config found."
+    if [ -e $HOME/.config ]; then
+        echo "... .config not found."
     else
-        mkdir "$HOME/.config"
+        mkdir $HOME/.config
     fi
     # File didn't exist for me, so test and touch
-    if [ -e "$HOME"/.Xresources ]; then
-        echo "... .Xresources found."
+    if [ -e $HOME/.Xresources ]; then
+        echo "... .Xresources not found."
     else
-        touch "$HOME"/.Xresources
+        touch $HOME/.Xresources
     fi
-    if [ -e "$HOME"/.config/nitrogen/bg-saved.cfg ]; then
-        echo "... .bg-saved.cfg found."
+    if [ -e $HOME/.config/nitrogen/bg-saved.cfg ]; then
+        echo "... .bg-saved.cfg not found."
     else
-        mkdir "$HOME"/.config/nitrogen
-        touch "$HOME"/.config/nitrogen/bg-saved.cfg
+        mkdir $HOME/.config/nitrogen
+        touch $HOME/.config/nitrogen/bg-saved.cfg
     fi
-    if [-e "$HOME"/.fonts/ ]; then
-        echo "... .fonts found."
+    if [-e $HOME/.fonts/ ]; then
+        echo "... .fonts not found."
     else
-        mkdir "$HOME"/.fonts
+        mkdir $HOME/.fonts
     fi
-    if [ -e "$HOME"/.config/polybar/config ]; then
-        echo "... polybar/config found."
+    if [ -e $HOME/.config/polybar/config ]; then
+        echo "... polybar/config not found."
     else
-        cp -r ./polybar "$HOME"/.config/
+        cp -r ./polybar $HOME/.config/
     fi
-    if [ -e "$HOME"/.config/i3/config ]; then
-        echo "... i3/config found."
+    if [ -e $HOME/.config/i3/config ]; then
+        echo "... i3/config not found."
     else
-        mkdir "$HOME"/.config/i3
-        cp -r ./i3 "$HOME/.config/"
+        #mkdir $HOME/.config/i3
+        cp -r ./i3 $HOME/.config/
     fi
     # Compton config file doesn't come by default
-    if [ -e "$HOME"/.config/compton/compton.conf ]; then
-        echo "... compton.conf found"
+    if [ -e $HOME/.config/compton/compton.conf ]; then
+        echo "... compton.conf not found"
     else
-        mkdir "$HOME"/.config/compton
-        cp -r ./compton "$HOME/.config/"
+        #mkdir $HOME/.config/compton
+        cp -r ./compton $HOME/.config/
     fi
     # Conky config file doesn't come by default
-    if [ -e "$HOME"/.config/conky/conky.conf ]; then
-        echo "... conky.conf found"
+    if [ -e $HOME/.config/conky/conky.conf ]; then
+        echo "... conky.conf not found"
     else
-        mkdir "$HOME"/.config/conky
-        cp -r ./conky "$HOME/.config/"
+        #mkdir $HOME/.config/conky
+        cp -r ./conky $HOME/.config/
     fi
 }
 
