@@ -25,5 +25,3 @@ Add the next sentence.
 #Dropbox
 exec --no-startup-id dropbox start
 ```
-Adicion de linea para prueba
-Adicion de otra nueva linea, estas dos se debn borrar por javier.
