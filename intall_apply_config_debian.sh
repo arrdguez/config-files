@@ -50,9 +50,9 @@ function install_required_packages() {
     echo "rofi application menu"
     echo "conky for wgets"
     # Refresh apt
-    sudo apt-get install polybar unzip compton nitrogen conky rofi arandr feh watch lxappearance speedtest-cli i3 i3-wm catfish curl htop terminator x11-xserver-utils binutils command-not-found ncal ncdu trash-cli -y
+    sudo apt-get install polybar unzip compton nitrogen conky rofi arandr feh watch lxappearance speedtest-cli i3 i3-wm catfish curl htop terminator x11-xserver-utils binutils command-not-found ncal ncdu trash-cli sct -y
     #libxcb-composite0-dev libxcb1-dev libxcb-keysyms1-dev libpango1.0-dev libxcb-util0-dev libxcb-icccm4-dev libyajl-dev libstartup-notification0-dev libxcb-randr0-dev libev-dev libxcb-cursor-dev libxcb-xinerama0-dev libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev autoconf xutils-dev dh-autoreconf x11-xserver-utils binutils gcc make pkg-config fakeroot cmake python-xcbgen xcb-proto libxcb-ewmh-dev wireless-tools libiw-dev libasound2-dev libpulse-dev libcurl4-openssl-dev libmpdclient-dev pavucontrol rxvt
-}
+}   #sct for screen temperature example 4000:warm, 6000 normal
 
 function get_config_repo() {
     pwd
