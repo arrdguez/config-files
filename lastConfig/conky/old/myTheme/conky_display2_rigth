@@ -1,0 +1,114 @@
+conky.config = {
+    -------------------------------------
+    --  Generic Settings
+    -------------------------------------
+    background = true,
+    update_interval = 1.0,
+    double_buffer = true,
+    imlib_cache_size = 0,
+
+    draw_shades = false,
+    draw_outline = false,
+    draw_borders = false,
+    draw_graph_borders = true,
+    no_buffers = true,
+
+    --default_bar_width = 150, default_bar_height = 5,
+    default_graph_width = 150,
+    default_graph_height = 12,
+    --default_gauge_width = 20, default_gauge_height = 20,
+    total_run_times = 0,
+    xinerama_head = 5,
+    cpu_avg_samples = 2,
+    hddtemp_host=localhost,
+    hddtemp_port=7634,
+
+
+    -------------------------------------
+    --  Window Specifications
+    -------------------------------------
+    gap_x = 50,
+    gap_y = 80,
+    --minimum_height=158,
+    --minimum_width=268,
+    own_window = true,
+    own_window_transparent = false,
+    own_window_argb_visual = true,
+    own_window_argb_value = 180,
+    own_window_type = 'override',
+    own_window_class = 'conky-semi',
+    own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+    alignment = 'top_right',
+    border_outer_margin = 20,
+
+
+    -------------------------------------
+    --  Text Settings
+    -------------------------------------
+    use_xft = true,
+    xftalpha = 0.8,
+    uppercase = false,
+    override_utf8_locale = true,
+    font = 'Liberation Mono:size=12',
+
+
+    -------------------------------------
+    --  Color Scheme
+    -------------------------------------
+    default_color = 'EEEEEE',
+    color1 = 'AABBFF',
+    color2 = 'FF993D',
+    color3 = 'AAAAAA',
+
+    -------------------------------------
+    -- layouting
+    -------------------------------------
+    template0 = [[${font Liberation Sans:bold:size=15}${color2}\1 ${color3}${hr 2}${font}]],
+    template1 = [[${color1}${font size=20}\1]],
+    template2 = [[${goto 140}${color}${font size=20}]],
+    template3 = [[${goto 210}${font Open Sans Light:size=12}${color}${alignr}]],
+    template4 = [[${color}${alignc}${font Open Sans bold:size=60}]],
+    template5 = [[${color}${font size=30}${alignc}]],
+    --${goto 50}${template1 BTC}${template3} ${font}${execi 60 curl -s https://api.coinbase.com/v2/prices/spot?currency=USD | jq '.data.amount' | sed -E 's/(,"*)//' | xargs printf "%.2f$"}${font}
+};
+
+
+conky.text = [[
+  ${template0 Resume}
+  ${goto 50}${template1 OS}                                                     ${template3}${alignr}${execi 10800 cat /etc/issue.net}${machine}${font}
+  ${goto 50}${template1 Hostname}                                                       ${template3}${nodename}
+  ${goto 50}${template1 Kernel}                                                     ${template3}${kernel}-${machine}
+  ${goto 50}${template1 Uptime}                                                         ${template3}${uptime_short}
+
+  ${template0 CPU}
+  ${goto 50}${template1 CPU}                                                            ${template3}${freq_g}GHz
+  ${goto 50}${template1 CPU\ Temperature}                                            ${template3}${exec  sensors | grep Core\ 0: | cut -c17-24}
+  ${goto 50}${template1 Load}               ${template2}${loadavg 1}                    ${template3}${loadgraph}
+  ${goto 50}${template1 Top1}                ${template2}${top name 1}                   ${template3}${top cpu 1}
+  ${goto 50}${template1 Top2}                ${template2}${top name 1}                   ${template3}${top cpu 2}
+  ${goto 50}${template1 Top2}                ${template2}${top name 1}                   ${template3}${top cpu 3}
+
+  ${template0 Memory}
+  ${goto 50}${template1 Memory}             ${template2}${memperc}% used                ${template3}${mem} / ${memmax}
+  ${goto 50}${template1 Top}                ${template2}${top_mem name 1}               ${template3}${top_mem mem_vsize 1}
+
+  ${template0 Filesystem}
+  ${goto 50}${template1 HDD\ Temperature\ /dev/sdb}                                     ${template3}${hddtemp }°C
+  ${goto 50}${template1 /}                  ${template2}${fs_free /} free               ${template3}${fs_used /} / ${fs_size /}
+  ${goto 50}${voffset 4}${color1}${fs_bar /}${color}
+  #${template1 DATA}               ${template2}${fs_free /media/rfeynman//} free               ${template3}${fs_used /media/rfeynman/DATA/} / ${fs_size /media/rfeynman/DATA/}
+  ${goto 50}${template1 IO\ Read}           ${template2}${diskio_read}                  ${template3}${diskiograph_read}
+  ${goto 50}${template1 IO\ Write}          ${template2}$diskio_write                   ${template3}${diskiograph_write}
+  ${goto 50}${template1 Top}                ${template2}${top_io name 1}                ${template3}${top_io io_perc 1}%
+
+  ${font zekton:style=Bold:pixelsize=14}${color2}Connection${font  Snap.se:size=8} ${color1}${hr}${color}
+  ${goto 25}${font FontAwesome} ${font}${font  Snap.se:size=12}${goto 50}Public IpV4: ${alignr}${execi 3600 wget -O - -q ipv4.icanhazip.com}
+  ${goto 25}${font FontAwesome} ${font}${font  Snap.se:size=12}${goto 50}Public IpV6: ${alignr}${execi 3600 wget -O - -q ipv6.icanhazip.com}
+  ${goto 25}${voffset -5}
+
+  ${font zekton:style=Bold:pixelsize=14}${color2}Ethernet${font  Snap.se:size=8} ${color1}${hr}${color}
+  ${font FontAwesome}${font}${font  Snap.se:size=12}${goto 50}Eth0: ${alignr}${addr eno1}
+  ${font FontAwesome}${font}${font  Snap.se:size=12}${goto 50}Down ${downspeed eno1}/s ${alignr}${font FontAwesome}${font}${font  Snap.se:size=8}Up ${upspeed eno1}/s
+  ${downspeedgraph eno1 15,107} ${alignr}${upspeedgraph eno1 15,107}
+  Total ${totaldown eno1} ${alignr}Total ${totalup eno1}
+]];

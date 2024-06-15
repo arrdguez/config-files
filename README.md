@@ -35,3 +35,19 @@ Add the next sentence.
 #Dropbox
 exec --no-startup-id dropbox start
 ```
+
+
+## Color Temperature on linux
+Change the color temperature of the monitor using the command **sct**
+Install first the **sct**
+```bash
+sudo apt install sct
+```
+scale:
+3350K Studio "CP" light
+5000K Horizon daylight
+5000K Tubular fluorescent lamp of cool white
+5500K - 6000K Vertical daylight, electronic flash
+620K Xenon short-arc lamp
+
+I personaly recommend  4800K - 5000K at night.

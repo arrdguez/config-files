@@ -1,0 +1,131 @@
+conky.config = {
+    -------------------------------------
+    --  Generic Settings
+    -------------------------------------
+    background = true,
+    update_interval = 1.0,
+    double_buffer = true,
+    imlib_cache_size = 0,
+
+    draw_shades = false,
+    draw_outline = false,
+    draw_borders = false,
+    draw_graph_borders = true,
+    no_buffers = true,
+
+    --default_bar_width = 150, default_bar_height = 5,
+    default_graph_width = 150,
+    default_graph_height = 12,
+    --default_gauge_width = 20, default_gauge_height = 20,
+    total_run_times = 0,
+    xinerama_head = 0,
+    cpu_avg_samples = 2,
+    hddtemp_host=localhost,
+    hddtemp_port=7634,
+
+
+    -------------------------------------
+    --  Window Specifications
+    -------------------------------------
+    gap_x = 50,
+    gap_y = 80,
+    --minimum_height=158,
+    --minimum_width=268,
+    own_window = true,
+    own_window_transparent = false,
+    own_window_argb_visual = true,
+    own_window_argb_value = 180,
+    own_window_type = 'override',
+    own_window_class = 'conky-semi',
+    own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+    border_outer_margin = 20,
+
+
+    -------------------------------------
+    --  Text Settings
+    -------------------------------------
+    use_xft = true,
+    xftalpha = 0.8,
+    uppercase = false,
+    override_utf8_locale = true,
+    alignment = 'top_left',
+    font = 'Liberation Mono:size=11',
+
+
+    -------------------------------------
+    --  Color Scheme
+    -------------------------------------
+    default_color = 'EEEEEE',
+    color1 = 'AABBFF',
+    color2 = 'FF993D',
+    color3 = 'AAAAAA',
+    color1Cal = '86B5EA',
+
+
+    -------------------------------------
+    --  API Key
+    -------------------------------------
+    apikey="6970b6f2f52d08a85e50f4cbaebecb85",
+
+    -------------------------------------
+    --  City ID
+    --  3537906 -> Santa Clara
+    --  3530597 -> Ciudad de Mexico
+    --  3827408 -> Miguel Hidalgo, CDMX
+    --  3523349 -> Merida, Mexico
+    -------------------------------------
+    citycode="3827408",
+
+
+    -------------------------------------
+    --  Temp Unit (default, metric, imperial)
+    -------------------------------------
+    metric="metric",
+
+
+    -------------------------------------
+    --  Locale (e.g. "es_ES.UTF-8")
+    --  Leave empty for default
+    -------------------------------------
+    --template9="en_EN.UTF8"
+
+
+    -------------------------------------
+    -- layouting
+    -------------------------------------
+    template0 = [[${font Liberation Sans:bold:size=15}${color2}\1 ${color3}${hr 2}${font}]],
+    template1 = [[${color1}${font size=20}\1]],
+    template2 = [[${goto 140}${color}${font size=20}]],
+    template3 = [[${goto 210}${color}${alignr}]],
+    template4 = [[${color}${alignc}${font Open Sans bold:size=60}]],
+    template5 = [[${color}${font size=30}${alignc}]],
+};
+
+
+
+
+conky.text = [[
+
+  ${template4}${time %T}
+  ${goto 36}${template0 Weather}
+  ${execpi 1800 ~/.config/conky/myTheme/getweather}
+  ${font Open Sans Light:size=15}${execi 900 jq -r .name ~/.cache/weather.json}, ${execi 900 jq -r .sys.country ~/.cache/weather.json}${font}${font Open Sans Light:size=70}${alignr}${execi 900 jq -r .main.temp ~/.cache/weather.json | awk '{print int($1+0.5)}' # round num}°${font}${voffset -35}
+
+  ${font Open Sans Light:size=10}${execi 900 cp -f ~/.config/conky/myTheme/icons/64/$(jq .weather[0].id ~/.cache/weather.json).png ~/.cache/weather.png}${image ~/.cache/weather.png -p 0,196 -s 60x60 -n}
+
+  ${execi 900 jq -r .weather[0].description ~/.cache/weather.json | sed "s|\<.|\U&|g"}${image ~/.config/conky/myTheme/icons/wind.png -p 0,290 -s 15x15}
+
+  ${goto 45}Wind:       ${execi 900 jq -r .wind.speed ~/.cache/weather.json} m/s${goto 195}Sunrice: ${execi 900 date -d "@$(jq -r .sys.sunrise ~/.cache/weather.json)" +%-0H:%M}${image ~/.config/conky/myTheme/icons/humidity.png -p 0,308 -s 15x15}
+  ${goto 45}Humidity: ${execi 900 jq -r .main.humidity ~/.cache/weather.json | awk '{print int($1+0.5)}' # round num}%${goto 195}Sunset: ${execi 900 date -d "@$(jq -r .sys.sunset ~/.cache/weather.json)" +%-0H:%M}${voffset 15}
+
+  ${goto 18}${execi 900 date -d +1day +%^a}${goto 88}${execi 900 date -d +2day +%^a}${goto 158}${execi 900 date -d +3day +%^a}${goto 228}${execi 900 date -d +4day +%^a}${goto 298}${execi 900 date -d +5day +%^a}
+
+  ${execi 900 cp -f ~/.config/conky/myTheme/icons/32/$(~/.config/conky/myTheme/parse_weather 'ico' '.weather[0].icon' '1').png ~/.cache/weather-1.png}${image ~/.cache/weather-1.png -p 0,368 -s 30x30 -n}${execi 900 cp -f ~/.config/conky/myTheme/icons/32/$(~/.config/conky/myTheme/parse_weather 'ico' '.weather[0].icon' '2').png ~/.cache/weather-2.png}${image ~/.cache/weather-2.png -p 60,368 -s 30x30 -n}${execi 900 cp -f ~/.config/conky/myTheme/icons/32/$(~/.config/conky/myTheme/parse_weather 'ico' '.weather[0].icon' '3').png ~/.cache/weather-3.png}${image ~/.cache/weather-3.png -p 130,368 -s 30x30 -n}${execi 900 cp -f ~/.config/conky/myTheme/icons/32/$(~/.config/conky/myTheme/parse_weather 'ico' '.weather[0].icon' '4').png ~/.cache/weather-4.png}${image ~/.cache/weather-4.png -p 200,368 -s 30x30 -n}${execi 900 cp -f ~/.config/conky/myTheme/icons/32/$(~/.config/conky/myTheme/parse_weather 'ico' '.weather[0].icon' '5').png ~/.cache/weather-5.png}${image ~/.cache/weather-5.png -p 270,368 -s 30x30 -n}${voffset 20}${goto 20}${execi 900 ~/.config/conky/myTheme/parse_weather 'max' '.main.temp_max' '1'}°${goto 90}${execi 900 ~/.config/conky/myTheme/parse_weather 'max' '.main.temp_max' '2'}°${goto 160}${execi 900 ~/.config/conky/myTheme/parse_weather 'max' '.main.temp_max' '3'}°${goto 230}${execi 900 ~/.config/conky/myTheme/parse_weather 'max' '.main.temp_max' '4'}°${goto 300}${execi 900 ~/.config/conky/myTheme/parse_weather 'max' '.main.temp_max' '5'}°
+  ${goto 20}${execi 900 ~/.config/conky/myTheme/parse_weather 'min' '.main.temp_min' '1'}°${goto 90}${execi 900 ~/.config/conky/myTheme/parse_weather 'min' '.main.temp_min' '2'}°${goto 160}${execi 900 ~/.config/conky/myTheme/parse_weather 'min' '.main.temp_min' '3'}°${goto 230}${execi 900 ~/.config/conky/myTheme/parse_weather 'min' '.main.temp_min' '4'}°${goto 300}${execi 900 ~/.config/conky/myTheme/parse_weather 'min' '.main.temp_min' '5'}°
+
+  ${font Open Sans Light:size=10}${execi 900 date -d "@$(jq -r .dt ~/.cache/weather.json)" +%c}${font}
+
+  ${template0 Calendar}
+
+  ${font Noto Mono:size=16}${execpi 300 ~/.config/conky/myTheme/cal.lua}${font}
+]];
